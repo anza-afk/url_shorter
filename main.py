@@ -27,8 +27,5 @@ async def get_full_url(
     short_link: str = Path(min_length=6, max_length=6),
     db: Session = Depends(get_db)
 ):
-    print('1111111111111111111')
     full_link = crud.get_full_link(db, short_link)
-    print(full_link)
-    print('2222222222222222222')
     return full_link
