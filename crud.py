@@ -3,12 +3,11 @@ from sqlalchemy.orm.exc import NoResultFound
 import schemas
 from models import Link
 
-BASE_URL = "HTTP://TEST0.RU/"
 
-def shorten_link(db: Session, url: dict):
+def shorten_link(db: Session, url: dict, base_url: str):
     if Link.check_if_url_exists(db, url):
         return db.query(Link).filter(Link.url == url).first()
-    short_url = Link.get_short_url(db, BASE_URL)
+    short_url = Link.get_short_url(db, base_url)
     new_link = Link(
         url=url,
         short_url=short_url
@@ -18,8 +17,8 @@ def shorten_link(db: Session, url: dict):
     return new_link
 
 
-def get_full_link(db: Session, link: str):
-    short_url = f"{BASE_URL}{link}"
+def get_full_link(db: Session, link: str, base_url: str):
+    short_url = f"{base_url}{link}"
     try:
         return db.query(Link).filter(Link.short_url == short_url).first()
     except Exception as e:
