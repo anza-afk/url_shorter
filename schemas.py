@@ -2,8 +2,9 @@ from pydantic import BaseModel
 
 class LinkBase(BaseModel):
     url: str
-    short_url: str
-
+    
+    class Config:
+        orm_mode = True
 
 class LinkCreate(LinkBase):
     pass
@@ -11,6 +12,4 @@ class LinkCreate(LinkBase):
 
 class Link(LinkBase):
     id: int
-
-    class Config:
-        orm_mode = True
+    short_url: str
