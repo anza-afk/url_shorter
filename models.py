@@ -20,10 +20,10 @@ class Link(Base):
         return query
 
     @staticmethod
-    def get_short_url(db: Session, BASE_URL: str):
+    def get_short_url(db: Session, base_url: str):
         symbols = ascii_letters+digits
         while True:
-            url = f"{BASE_URL}{''.join((choices(symbols, k=6)))}"
+            url = f"{base_url}{''.join((choices(symbols, k=6)))}"
             if not Link.check_if_url_exists(db, url, long=False):
                 break
         return url
