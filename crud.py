@@ -1,10 +1,11 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.orm.exc import NoResultFound
-import schemas
 from models import Link
 
 
-def shorten_link(db: Session, url: dict, base_url: str):
+def shorten_link(db: Session, url: str, base_url: str) -> Link:
+    while "\\" in url:
+        url = url.replace("\\", '/')
     if Link.check_if_url_exists(db, url):
         return db.query(Link).filter(Link.url == url).first()
     short_url = Link.get_short_url(db, base_url)

@@ -39,7 +39,7 @@ async def get_short_url(
 
 @app.get("/{short_link}", response_model=schemas.Link, status_code=status.HTTP_200_OK)
 async def get_full_url(
-    short_link: str = Path(min_length=6, max_length=6),
+    short_link: str = Path(),#= Path(min_length=6, max_length=6),
     db: Session = Depends(get_db)
 ):
     full_link = crud.get_full_link(db, short_link, base_url)
